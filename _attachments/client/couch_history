@@ -1,0 +1,38 @@
+#!/usr/bin/env ruby
+# 
+# couch-history
+#
+# Stores a shell command in CouchDB. To use install this script somewhere in
+# your $PATH and put this line in your .bashrc configuration:
+#
+#     export PROMPT_COMMAND="history | couch_history"
+#
+
+require 'couchrest'
+
+DEFAULT_COUCH_HISTORY_URL = "http://localhost:5984/couch-history"
+
+class CouchHistory
+  def initialize(couchdb_url)
+    @db = CouchRest.database!(couchdb_url || DEFAULT_COUCH_HISTORY_URL)
+  end
+
+  def save(cmd)
+    @db.save_doc({
+      :type       => 'ShellCommand',
+      :command    => cmd,
+      :created_at => Time.now
+    })
+  end
+end
+
+if __FILE__ == $0
+  child_pid = fork do
+    last_cmd = (STDIN.read.split("\n").last || "").sub(/^\s*\d+\s+/, '')
+    unless last_cmd.strip.empty?
+      CouchHistory.new(ENV['COUCH_HISTORY_URL']).save(last_cmd)
+    end
+  end
+  Process.detach(child_pid)
+  exit(0)
+end
