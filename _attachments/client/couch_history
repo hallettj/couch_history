@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 # 
-# couch-history
+# couch_history
 #
 # Stores a shell command in CouchDB. To use install this script somewhere in
 # your $PATH and put this line in your .bashrc configuration:
@@ -10,7 +10,7 @@
 
 require 'couchrest'
 
-DEFAULT_COUCH_HISTORY_URL = "http://localhost:5984/couch-history"
+DEFAULT_COUCH_HISTORY_URL = "http://localhost:5984/couch_history"
 
 class CouchHistory
   def initialize(couchdb_url)

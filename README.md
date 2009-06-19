@@ -1,4 +1,4 @@
-couch-history
+couch_history
 ==============
 
 Utility to record your shell history in CouchDB. Based on [Shell Sink][] by
@@ -12,7 +12,7 @@ To use install the script `_attachments/client/couch_history` somewhere in your
     export PROMPT_COMMAND="history | couch_history"
 
 Make sure you have CouchDB running somewhere. By default couch_history stores
-commands at http://localhost:5984/couch-history. To specify a different
+commands at http://localhost:5984/couch_history. To specify a different
 location set an environment variable called `COUCH_HISTORY_URL`.
 
 
